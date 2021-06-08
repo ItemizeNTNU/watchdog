@@ -1,0 +1,212 @@
+/* Colors:
+ *
+ * Text: 		#ffffff - white
+ * Background: 	#353033 - dark gray
+ *
+ * Green 1:		#3CB34F - lightest green
+ * Green 2:		#159545 - light green
+ * Green 3:		#0F6539 - green
+ *
+ * Gray 2:		#7F7CAF - light gray
+ * Gray 3:		#8B88B6 - gray
+ * Gray 4:		#9693BD - dark gray
+ */
+:root {
+	--text: #ffffff; /* white */
+	--background: #353033; /* dark gray */
+	--green-1: #3cb34f; /* lightest green */
+	--green-2: #159545; /* light green */
+	--green-3: #0f6539; /* green */
+	--gray-2: #7f7c7f; /* light gray */
+	--gray-3: #8b8886; /* gray */
+	--gray-4: #969395; /* dark gray */
+	--darker: #0004;
+
+	--warning: #b43c3c;
+	--warning-text: #ff6565;
+	--success: #159545;
+	--success-text: #3cb34f;
+	--alert: #b46e3c;
+	--alert--text: #d56b20;
+
+	--error-text: var(--warning);
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: inherit;
+}
+
+body {
+	margin: 0;
+	font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+	font-size: 14px;
+	line-height: 1.5;
+	color: var(--text);
+	background-color: var(--background);
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin: 0 0 0.5em 0;
+	font-weight: 400;
+	line-height: 1.2;
+}
+
+h1 {
+	font-size: 2em;
+}
+
+a {
+	color: var(--green-2);
+}
+
+a:active {
+	color: var(--green-3);
+}
+
+li {
+	list-style-type: 'ᐉ ';
+	list-style-type: '» ';
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+	width: 100%;
+	height: 100%;
+}
+
+code {
+	font-family: menlo, inconsolata, monospace;
+	background-color: rgba(0, 0, 0, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	border-radius: 0.2em;
+	padding: 0em 0.2em;
+}
+
+code.block {
+	white-space: pre-wrap;
+	display: block;
+	padding: 0.125em 0.5em;
+}
+
+input,
+textarea,
+button,
+select {
+	font-size: 1em;
+	padding: 0.25em;
+	margin: 0 0.2em;
+	border-radius: 0.25em;
+	appearance: none;
+	width: 15em;
+	background-color: #fff1;
+	color: inherit;
+	cursor: pointer;
+	border: 2px solid #fff0;
+	transition: 200ms linear;
+}
+input[type='text'],
+input[type='password'],
+input[type='number'],
+textarea {
+	cursor: text;
+}
+label {
+	cursor: pointer;
+}
+input:focus,
+textarea:focus,
+button:focus,
+select:focus {
+	background-color: var(--green-3);
+}
+input:focus-visible,
+textarea:focus-visible,
+button:focus-visible,
+select:focus-visible {
+	outline: 0.1em solid var(--green-2);
+}
+button:active {
+	background-color: var(--green-1);
+}
+
+input[type='checkbox'] {
+	vertical-align: text-top;
+	appearance: none;
+	margin-top: 0.125em;
+	margin-right: 1em;
+	width: 1em;
+	height: 1em;
+	padding: 0;
+	position: relative;
+}
+input:hover,
+textarea:hover,
+button:hover,
+select:hover {
+	border-color: #fff8;
+}
+input[type='checkbox']:checked {
+	border: 0.4em solid var(--green-1);
+	border-radius: 50%;
+}
+
+.error {
+	color: var(--error-text);
+}
+
+card {
+	--border-width: 2px;
+	--border-radius: 0.5em;
+	display: block;
+	position: relative;
+	background: var(--darker);
+	padding: 0.5em 1em;
+	border-radius: var(--border-radius);
+	margin: 0.5em;
+	border: var(--border-width) solid #fff0;
+	transition: 400ms linear;
+}
+
+card > *:last-child {
+	margin-bottom: 0;
+}
+
+card.hover:hover {
+	cursor: pointer;
+	border-color: #fff2;
+}
+
+card.disabled::before {
+	content: '';
+	position: absolute;
+	background: #0004;
+	pointer-events: none;
+	inset: calc(0px - var(--border-width));
+	border-radius: var(--border-radius);
+	z-index: 10000;
+}
+
+.row {
+	display: flex;
+	flex-direction: row;
+}
+
+@media (min-width: 400px) {
+	body {
+		font-size: 16px;
+	}
+}
+@media (min-width: 56em) {
+	main {
+		margin-bottom: 3.5em;
+	}
+}

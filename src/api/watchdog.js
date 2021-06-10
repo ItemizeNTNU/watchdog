@@ -119,7 +119,7 @@ const cleanup = async () => {
 	]);
 	if (orphants.length) {
 		console.log(`Found ${orphants.length} orphant scans. Deleting...`);
-		const res = await Scan.deleteMany({ _id: { $id: orphants } });
+		const res = await Scan.deleteMany({ _id: { $in: orphants } });
 		console.log('Deleted orphants:', res);
 	}
 };

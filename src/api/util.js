@@ -17,32 +17,36 @@ export const loggedIn = (req, res, next) => {
  */
 export const auto_scan_dns = async (domain, doNotify = true) => {
 	console.log(`Doing full port scan with service detection for ${domain}...`);
-	return scanner.raw_ip_scan(domain, '1-65535', true).then(async (data) => {
-		console.log(
-			`Found open ports for ${domain}:`,
-			data.map((p) => [p.port, p.service + (p.tunnel ? '+' + p.tunnel : '')])
-		);
-		for (let open of data) {
-			if (open.service != 'http') continue;
-			const proto = open.tunnel == 'ssl' ? 'https' : 'http';
-			const port = { '80-http': '', '443-https': '' }[`${open.port}-${proto}`] ?? `:${open.port}`;
-			const url = `${proto}://${domain}${port}/`;
-			const coveredEndpoint = await Scope.findOne({ type: 'endpoint', value: url }).select({ _id: 1 });
-			if (!coveredEndpoint) {
-				const domainParent = await Scope.findOne({ type: 'domain', value: domain });
-				await new Scope({
-					type: 'endpoint',
-					value: url,
-					settings: {
-						subdomains: false
-					},
-					parent: domainParent || parent
-				}).save();
-				console.log(`Added new endpoint rules for:`, url);
-				if (doNotify) await notify(`Generated new endpoint rule for ${code(domain)}`, `Added new endpoint monitor for: ${code(url)}`, { type: 'info' });
+	try {
+		return scanner.raw_ip_scan(domain, '1-65535', true).then(async (data) => {
+			console.log(
+				`Found open ports for ${domain}:`,
+				data.map((p) => [p.port, p.service + (p.tunnel ? '+' + p.tunnel : '')])
+			);
+			for (let open of data) {
+				if (open.service != 'http') continue;
+				const proto = open.tunnel == 'ssl' ? 'https' : 'http';
+				const port = { '80-http': '', '443-https': '' }[`${open.port}-${proto}`] ?? `:${open.port}`;
+				const url = `${proto}://${domain}${port}/`;
+				const coveredEndpoint = await Scope.findOne({ type: 'endpoint', value: url }).select({ _id: 1 });
+				if (!coveredEndpoint) {
+					const domainParent = await Scope.findOne({ type: 'domain', value: domain });
+					await new Scope({
+						type: 'endpoint',
+						value: url,
+						settings: {
+							subdomains: false
+						},
+						parent: domainParent || parent
+					}).save();
+					console.log(`Added new endpoint rules for:`, url);
+					if (doNotify) await notify(`Generated new endpoint rule for ${code(domain)}`, `Added new endpoint monitor for: ${code(url)}`, { type: 'info' });
+				}
 			}
-		}
-	});
+		});
+	} catch (err) {
+		console.error(`Unable to do full port scan of domain ${domain}`);
+	}
 };
 
 /**

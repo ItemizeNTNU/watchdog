@@ -3,6 +3,8 @@ import fetch from 'node-fetch';
 import { promises as dns } from 'dns';
 import postgres from 'postgres';
 import punycode from 'tr46';
+import { notify } from './notify';
+import { code } from '../utils/text';
 
 const diff_arrays = (a, b) => {
 	a = new Set(a);
@@ -21,7 +23,13 @@ const diff_arrays_output = (a, b) => {
 export const raw_ip_scan = async (ip, port, extended) => {
 	return await new Promise((resolve, reject) => {
 		const scan = new nmap.NmapScan(ip, `-p ${port}${extended ? ' -sC -sV' : ''}`);
-		scan.on('error', (err) => reject(err));
+		scan.on('error', (err) => {
+			console.error(`An error occured while trying to ip scan '${ip}' ports: '${port}', extended: ${extended}`);
+			console.error('Scan:', scan);
+			console.error(err);
+			notify('IP scan error', `Error running IP scan for:${code(ip)}, ports: ${code(port)}, extended: ${code(extended)}\nOutput data:\n${'```'}${scan.rawData}${'```'}`)
+			reject(err)
+		});
 		scan.on('complete', (data) => resolve(data[0].openPorts.map((p) => (extended ? p : p.port))));
 		scan.startScan();
 	});

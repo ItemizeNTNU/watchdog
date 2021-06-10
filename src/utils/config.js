@@ -1,23 +1,25 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
-const random = n => {
+const random = (n) => {
 	let out = '';
 	const alph = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890';
 	for (let i = 0; i < n; i++) {
 		out += alph[Math.floor(Math.random() * alph.length)];
 	}
 	return out;
-}
+};
 
 const check_missing = (obj, keys, ignore) => {
-	keys.filter(k => !ignore.includes(k)).forEach(k => {
-		if (!obj[k]) {
-			console.error(`Missing or invalid mandatory environment variable '${k}' with current value:`, obj[k]);
-			process.exit(1);
-		}
-	})
-}
+	keys
+		.filter((k) => !ignore.includes(k))
+		.forEach((k) => {
+			if (!obj[k]) {
+				console.error(`Missing or invalid mandatory environment variable '${k}' with current value:`, obj[k]);
+				process.exit(1);
+			}
+		});
+};
 
 export const { NODE_ENV } = process.env;
 export const dev = NODE_ENV == 'development';
@@ -37,14 +39,14 @@ const defaults = {
 	DISCORD_USERNAME: 'Itemize Watchdog',
 	DISOCRD_AVATAR: 'https://status.itemize.no/icon.png',
 	NODE_ENV,
-	dev,
-}
+	dev
+};
 
 let config = { ...defaults };
 Object.assign(config, process.env);
 Object.freeze(config);
 
-check_missing(config, Object.keys(defaults), ['dev'])
+check_missing(config, Object.keys(defaults), ['dev']);
 
 export const { PORT, ISSUER, CLIENT_ID, CLIENT_SECRET, SECRET, BASE_URL, MONGO_DB_URL, MAX_SCAN_TIME, SCAN_PAUSE, CLEANUP_INTERVAL } = config;
 export default config;

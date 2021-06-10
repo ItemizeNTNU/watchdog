@@ -17,7 +17,7 @@ export const loggedIn = (req, res, next) => {
  */
 export const auto_scan_dns = async (domain, doNotify = true) => {
 	console.log(`Doing full port scan with service detection for ${domain}...`);
-	return scanner.raw_ip_scan(domain, '1-65545', true).then(async (data) => {
+	return scanner.raw_ip_scan(domain, '1-65535', true).then(async (data) => {
 		console.log(
 			`Found open ports for ${domain}:`,
 			data.map((p) => [p.port, p.service + (p.tunnel ? '+' + p.tunnel : '')])

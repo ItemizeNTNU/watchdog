@@ -33,6 +33,7 @@ The application is first and formost developed as the main monitoring tool for I
   - Get notified on Discord when changes are detected
 - OAuth admin authentication
 - Local authentication (**TODO**)
+- Monitor served certificates (**TODO**)
 
 # Setup:
 

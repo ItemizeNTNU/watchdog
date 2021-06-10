@@ -2,7 +2,7 @@ FROM node:alpine
 
 WORKDIR /app
 COPY . .
-RUN apk add nmap
+RUN apk add nmap nmap-scripts
 RUN npm install
 RUN npm run build
 

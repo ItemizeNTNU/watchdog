@@ -17,8 +17,7 @@ export const loggedIn = (req, res, next) => {
  */
 export const auto_scan_dns = async (domain, doNotify = true) => {
 	console.log(`Doing full port scan with service detection for ${domain}...`);
-	return scanner.raw_ip_scan(domain, '80,443,22,90', true).then(async (data) => {
-		// TODO: ALL PORTS
+	return scanner.raw_ip_scan(domain, '1-65545', true).then(async (data) => {
 		console.log(
 			`Found open ports for ${domain}:`,
 			data.map((p) => [p.port, p.service + (p.tunnel ? '+' + p.tunnel : '')])
@@ -59,7 +58,7 @@ export const add_missing = async (type, values, parent) => {
 	const new_values = values.filter((a) => !covered.includes(a));
 	try {
 		const settings = {
-			ip: { ports: '80,443,22' }, // TODO: FIX ME
+			ip: { ports: '1-65535' },
 			domain: { subdomains: false },
 			endpoint: { regex: '' }
 		};

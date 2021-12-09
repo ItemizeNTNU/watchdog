@@ -18,7 +18,7 @@
 		"compression": "^1.7.1",
 		"dotenv": "^10.0.0",
 		"express": "^4.17.1",
-		"express-openid-connect": "^2.4.0",
+		"express-openid-connect": "^2.5.2",
 		"filesize": "^6.3.0",
 		"moment": "^2.29.1",
 		"mongoose": "^5.12.10",

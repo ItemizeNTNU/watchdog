@@ -20,7 +20,7 @@
 		"express": "^4.17.1",
 		"express-openid-connect": "^2.7.2",
 		"filesize": "^6.3.0",
-		"moment": "^2.29.2",
+		"moment": "^2.29.4",
 		"mongoose": "^5.12.10",
 		"node-fetch": "^3.1.1",
 		"node-nmap": "^4.0.0",
